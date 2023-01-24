@@ -1,16 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import Weather from './src/Weather';
+import Home from './src/Screens/Home';
 export default function App() {
   
   return (
     <View style={styles.container}>
-      <Weather />
+      <Home />
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent : 'center'
   },
 });
