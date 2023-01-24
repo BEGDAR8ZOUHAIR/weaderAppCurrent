@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, StyleSheet, SafeAreaView, TextInput } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, SafeAreaView, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios'
@@ -7,6 +7,7 @@ import axios from 'axios'
 const Home = () =>
 {
     const [city, setCity] = useState('')
+    const [weather, setWeather] = useState({})  // this is an object that will hold the weather data
     const getWeather = async () =>
     {
         if (!city.trim()) return    
@@ -14,10 +15,15 @@ const Home = () =>
         try
         {
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8674cd3c77c2530a4c88d0ed755315f6`)
-            console.log(response.data);
+            setWeather(response.data)
         } catch (error)
         {
-            console.log(error)
+            Alert.alert(
+                'Hello',
+                //body
+                ' this city does not exist'
+                
+            );
         }
     }
     return (
