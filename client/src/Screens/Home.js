@@ -1,9 +1,10 @@
 import { View, Text, ImageBackground, StyleSheet, SafeAreaView, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { EvilIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios'
-// import SunIcon from './assets/sun.svg';
+import SunIcon from '../../assets/2.png';
+
+// <MaterialCommunityIcons name="weather-cloudy" size={24} color="black" />
 
 const Home = () =>
 {
@@ -17,7 +18,6 @@ const Home = () =>
         {
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8674cd3c77c2530a4c88d0ed755315f6`)
             setWeather(response.data)
-            console.log("data :::",response.data)
         } catch (error)
         {
             Alert.alert(
@@ -28,8 +28,8 @@ const Home = () =>
         }
     }
     return (
-        // <ImageBackground source={ImageOne} style={styles.image} >
-        <SafeAreaView style={styles.backgroundColor}>
+        <ImageBackground source={SunIcon} style={styles.image} >
+        <SafeAreaView >
             <View style={styles.textInputContainer}>
 
                 <TextInput
@@ -38,80 +38,78 @@ const Home = () =>
                     placeholder="Search"
                     onChangeText={(text) => setCity(text)}
                 />
-                <AntDesign
+                 <EvilIcons
                     onPress={getWeather}
-                    name="checksquare"
-                    size={50}
-                    color="rgba(255,255,255,0.7)" />
+                    name="check"
+                    size={24}
+                    color="black" />
             </View>
 
             {Object.keys(weather).length > 0 ? 
                 <>
             <View style={styles.locationContainer} >
-                <Text style={styles.locationText} >{weather?.name} ,{weather?.sys?.country}</Text>
-
+                            <Text style={styles.locationContainer} >{weather?.name}</Text>
+                            <Ionicons name="ios-location-outline" size={24} color="black" />
             </View>
+                
             <View style={styles.weatherContainer} >
                      <Text style={styles.temp} >{Math.round(weather?.main?.temp - 273.15)}°C</Text>
                         <Text style={styles.weather} >{weather.weather?.[0].main}</Text>   
                         <View style={styles.textInputContainer}>
 
-                            <MaterialCommunityIcons name="weather-rainy" size={55} color="#fff" /> 
+                            {/* <MaterialCommunityIcons name="weather-rainy" size={55} color="#fff" />  */}
                         </View>
                        
                     </View>
                 </>
                 : null}
         </SafeAreaView>
-        //  </ImageBackground>
+     </ImageBackground>
     )
 }
 const styles = StyleSheet.create({
-    backgroundColor: {
+    image: {
         flex: 1,
-        backgroundColor: 'rgb(21,188,246)',
-        alignItems: 'center',
-        justifyContent: 'center',
-
     },
     textInputContainer: {
-        flex: 1,
+        backgroundColor: '#F8EDE3',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        width: '60%',
         flexDirection: 'row',
-        marginTop: 40,
+        justifyContent: 'space-between',
+        marginVertical: 15,
+        textShadowColor: 'black',
+        
+       
     },
     textInput: {
-        height: 50,
-        width: 250,
-        backgroundColor: 'rgba(255,255,255,0.7)',
-        borderRadius: 10,
-        padding: 10,
-        fontSize: 20,
+        height: 40,
     },
     locationContainer: {
-        flex: 1,
         marginVertical: 15,
+        alignItems: 'center',
+        fontSize: 20,
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     locationText: {
-        fontSize: 35,
-        color: '#fff',
-        // fontWeight: 'bold',
-        // textAlign: 'center',
-        textShadowColor: 'rgba(0,0,0,0.45)',
+
+        textShadowColor: 'rgba(0,0,0,0.15)',
         textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 5,
     },
     weatherContainer: { 
-        flex: 1,
         alignItems: 'center',
     },
     temp: {
         textAlign: 'center',
-        color: '#fff',
-        fontSize: 50,
-        // fontWeight: 'bold',
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        color: 'black',
+        fontSize: 40,
         paddingVertical: 15,
-        paddingHorizontal: 30,
+        paddingHorizontal: 60,
         borderRadius: 10,
         overflow: 'hidden',
         textShadowColor: 'rgba(0,0,0,0.15)',
@@ -120,10 +118,7 @@ const styles = StyleSheet.create({
     },
     weather: {
         fontSize: 30,
-        color: '#fff',
-        // fontWeight: 'bold',
-        textShadowColor: 'rgba(0,0,0,0.15)',
-        textShadowOffset: { width: -1, height: 1 },
+        color: 'black',
         textShadowRadius: 5,
     },
 
