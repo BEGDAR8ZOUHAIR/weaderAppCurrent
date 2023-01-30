@@ -8,12 +8,18 @@ import axios from 'axios'
 import SunIcon from '../../assets/3.jpg';
 import { API_KEY } from '../utils/weatherApiKey';
 
+const hours = ['9:00', '12:00', '15:00', '18:00', '21:00', '00:00', '03:00', '06:00'];
+
 const Home = () =>
 {
-    const [city, setCity] = useState('')
-    const [weather, setWeather] = useState({})  
-   
-   
+    const [city, setCity] = useState('Safi')
+    const [weather, setWeather] = useState({})
+    const [weatherData, setWeatherData] = useState([])
+
+
+
+    // get weather for current  loaction =====================================================
+
     const getCurentWeather = async () =>
     {
         try
@@ -42,6 +48,7 @@ const Home = () =>
         getCurentWeather()
     }, [])
 
+    // get weather for searched city =====================================================
     const getWeather = async () =>
     {
         if (!city.trim()) return
@@ -58,10 +65,31 @@ const Home = () =>
             );
         }
     }
+    //  get weather for each hour =====================================================
+    const getWeatherForHour = async (hour) =>
+    {
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
+        setWeatherData(prevData => [...prevData, { hour, weather: response.data }]);
+
+    };
+
+    const fetchWeatherData = async () =>
+    {
+        setWeatherData([])
+        hours.forEach(async (hour) => await getWeatherForHour(hour));
+    };
+
+    useEffect(() =>
+    {
+        fetchWeatherData();
+    }, [city]);
+
+    // ===================================================================================
+
     return (
         <ImageBackground source={SunIcon} style={styles.image} >
             <SafeAreaView >
-                
+
                 <View style={styles.container}>
 
                     <TextInput
@@ -76,11 +104,11 @@ const Home = () =>
                         name="check"
                         size={35}
                         color="black" />
-                    </View>
-                
+                </View>
+
                 {Object.keys(weather).length > 0 ?
                     <>
-                        
+
                         <View style={styles.dateContainer} >
                             <Text style={styles.dateContainer} >{new Date().toLocaleDateString([], { month: 'short', day: 'numeric' })}  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
                         </View>
@@ -95,7 +123,8 @@ const Home = () =>
                             <Ionicons name="ios-location-outline" size={24} color="black" />
                         </View>
                         <View style={styles.weatherContainer} >
-                            <Text style={styles.temp} >{Math.round(weather?.main?.temp - 273.15)}°</Text>
+                            <Text style={styles.temp} >{Math.round(weather?.main?.temp - 273.15)}</Text>
+                            
                             <Text style={styles.typeWeather}>{weather?.weather[0]?.main}</Text>
                         </View>
                         <View style={styles.humidity} >
@@ -108,35 +137,37 @@ const Home = () =>
                             <Text style={styles.wind}>{weather?.wind?.speed}km</Text>
                             <MaterialCommunityIcons name="wind-turbine" size={24} color="black" />
                         </View>
-                        <View>
-                            <FlatList
-                                data={weather?.weather}
-                                keyExtractor={(item) => item.id.toString()}
-                                renderItem={({ item }) =>
-                                {
-                                    return (
-                                        <View style={styles.forecastContainer} >
-                                            <Text style={styles.forecastContainer} >{Moment(item.dt_txt).format('HH:mm')}</Text>
-                                            <Text style={styles.forecastContainer} >{item.description}</Text>
-                                            <Image
-                                                source={{ uri: `http://openweathermap.org/img/w/${item.icon}.png`}}
-                                            style={styles.forecastImage}
-                                            />
-                                        </View>
-                                    )
-                                }
-                                }
-                                />
-                                        
-                        </View>
-                       
+
+                        {/* <View style={styles.hr} /> */}
+                        <FlatList
+                            extraData={weatherData}
+                            removeClippedSubviews={false}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={weatherData}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) =>
+                            {
+                                return (
+                                    <View style={styles.hourContainer} >
+                                        <Text style={styles.hour} >{item.hour}</Text>
+                                        <Text style={styles.hour} >{Math.round(item.weather?.main?.temp - 273.15)}°C</Text>
+                                        <Image
+                                            style={styles.hourIcon}
+                                            source={{ uri: `http://openweathermap.org/img/wn/${item.weather?.weather[0]?.icon}.png` }}
+                                        />
+                                    </View>
+                                )
+                            }}
+                        />
                     </>
-                        : null}
-                
+                    : null}
             </SafeAreaView>
         </ImageBackground>
     )
 }
+
+
 const styles = StyleSheet.create({
     image: {
         flex: 1,
@@ -158,7 +189,8 @@ const styles = StyleSheet.create({
     dateContainer: {
         alignItems: 'center',
         fontSize: 20,
-        color : 'darkslateblue'
+        color: '#310303',
+
     },
     textInput: {
         width: 300,
@@ -166,9 +198,8 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 20,
         marginBottom: 10,
-        backgroundColor: '#e8e8e8',
         borderRadius: 10,
-
+        backgroundColor: '#fff',
     },
     locationContainer: {
         marginVertical: 15,
@@ -176,52 +207,69 @@ const styles = StyleSheet.create({
         fontSize: 20,
         flexDirection: 'row',
         justifyContent: 'center',
+        color: '#310303',
     },
     weatherContainer: {
-        color: 'black',
+        color: '#310303',
         alignItems: 'center',
-
     },
     temp: {
-        fontSize: 80,
-        justifyContent: 'center',
+        fontSize: 100,
+        color: '#310303',
         alignItems: 'center',
-
-
     },
     typeWeather: {
         fontSize: 25,
         marginHorizontal: 5,
         alignItems: 'center',
         flexDirection: 'row',
-       
+        color: '#310303',
     },
     humidity: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-around', 
+        justifyContent: 'space-around',
         marginTop: 10,
+        color: '#310303',
+
     },
     wind: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',
+        color: '#310303',
     },
     day: {
         flexDirection: 'row',
         marginHorizontal: 5,
     },
-    forecastContainer: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        fontSize: 20,
+    hourContainer: {
+        justifyContent: 'space-between',
+        marginHorizontal: 5,
+        marginVertical: 30,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 50,
+        // shadow
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4.84,
+        elevation: 5,
     },
-    forecastImage: {
-        width: 50,
-        height: 50,
-    }
-
+    hour: {
+        marginHorizontal: 5,
+        textAlign: 'center',
+    },
+    hourIcon: {
+        width: 40,
+        height: 40,
+        marginHorizontal: 20,
+    },
 
 });
 

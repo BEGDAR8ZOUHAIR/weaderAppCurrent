@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/storm.png",
+        "foregroundImage": "./assets/2.png",
         "backgroundColor": "#FFFFFF"
       }
     },

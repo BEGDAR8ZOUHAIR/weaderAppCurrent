@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, TextInput,  Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { View, TextInput,  Text, StyleSheet, TouchableOpacity ,Image} from 'react-native';
+import logo from '../../assets/01.png'
 const Login = ({ navigation }) =>
 {
   
@@ -19,6 +19,10 @@ const Login = ({ navigation }) =>
 
   return (
     <View style={styles.container}>
+      <Image
+        source={logo}
+        style={styles.image}
+      />
       <Text style={styles.label}></Text>
       <TextInput
         style={styles.input}
@@ -40,8 +44,7 @@ const Login = ({ navigation }) =>
         <Text style={{ color: 'white', fontSize: 18, textAlign: 'center' }}>Login</Text>
       </TouchableOpacity>
       
-      {/* <Button title="Go to Home" onPress={() => navigation.navigate('Home')}></Button>
-      <Button title="Go to Register" onPress={() => navigation.navigate('Register')}></Button> */}
+      
     </View>
   );
 };
@@ -55,6 +58,12 @@ const styles = StyleSheet.create({
     padding: 30,
 
   },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    
+  }, 
   label: {
     fontSize: 18,
     marginTop: 10,
@@ -67,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    backgroundColor: 'darkslateblue',
+    backgroundColor: "darkslateblue",
     marginTop: 15,
     color: 'tomato',
     paddingHorizontal: 30,
