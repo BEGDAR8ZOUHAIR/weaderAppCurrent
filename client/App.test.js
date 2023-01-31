@@ -24,8 +24,6 @@ test('renders correctly', () => {
     const tree = renderer.create(<Register />).toJSON();
     expect(tree).toMatchSnapshot();
 });
-    
-
 
 
 
