@@ -29,5 +29,46 @@ npx create-expo-app your app
 npm run web
 ```
 
+# Testing with Jest
+
+```
+npx expo install jest-expo jest
+```
+
+Then, update package.json to include:
+
+```	
+"scripts": {
+  ...
+  "test": "jest"
+},
+"jest": {
+  "preset": "jest-expo"
+}
+
+```
+and run render with your version of  react  in this case 18.1.0
+
+```
+npm i react-test-renderer@18.1.0
+```
+-Configuration
+A starting configuration you can use is to make sure any modules you are using within the node_modules directory are transpiled when running Jest. This can be done by including the transformIgnorePatterns property that takes a regex pattern as its value:
+    
+    ```
+    "jest": {
+      "preset": "jest-expo",
+      "transformIgnorePatterns": [
+        "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|expo(nent)?|@expo(nent)?/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
+      ]
+    }
+    ```
+
+for more information about testing with jest [click here](https://docs.expo.io/guides/testing-with-jest/)
+
+    
+
+
+
 
 

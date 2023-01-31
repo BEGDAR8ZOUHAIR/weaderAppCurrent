@@ -14,9 +14,6 @@ const Login = ({ navigation }) =>
     navigation.navigate('Home');
   };
 
-   
-  
-
   return (
     <View style={styles.container}>
       <Image
@@ -43,7 +40,6 @@ const Login = ({ navigation }) =>
       <TouchableOpacity style={styles.button} onPress={onSubmit}>
         <Text style={{ color: 'white', fontSize: 18, textAlign: 'center' }}>Login</Text>
       </TouchableOpacity>
-      
       
     </View>
   );
