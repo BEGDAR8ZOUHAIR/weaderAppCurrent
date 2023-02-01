@@ -66,6 +66,29 @@ A starting configuration you can use is to make sure any modules you are using w
 
 for more information about testing with jest [click here](https://docs.expo.io/guides/testing-with-jest/)
 
+
+# Create Doker image for server
+
+create a Dockerfile in the root of the project
+create a .dockerignore file in the root of the project
+
+for build the image
+```
+docker build -t nameOfyourImage .
+```
+for run the image
+```
+docker run -p 5000:5000 -it   nameOfyourImage
+```
+```
+
+
+
+
+
+
+
+
     
 
 
