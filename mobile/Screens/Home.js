@@ -5,7 +5,7 @@ import { EvilIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import * as Location from 'expo-location'
 import axios from 'axios'
-import SunIcon from '../../assets/3.jpg';
+import SunIcon from '../assets/3.jpg';
 import { API_KEY } from '../utils/weatherApiKey';
 
 const hours = ['9:00', '12:00', '15:00', '18:00', '21:00', '00:00', '03:00', '06:00'];
