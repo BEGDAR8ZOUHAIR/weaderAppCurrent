@@ -120,10 +120,10 @@ const Home = () =>
                         </View>
                         <View style={styles.locationContainer} >
                             <Text style={styles.locationContainer} >{weather?.name}</Text>
-                            <Ionicons name="ios-location-outline" size={24} color="black" />
+                            <Ionicons name="ios-location-outline" size={24} color="#fff" />
                         </View>
                         <View style={styles.weatherContainer} >
-                            <Text style={styles.temp} >{Math.round(weather?.main?.temp - 273.15)}</Text>
+                            <Text style={styles.temp} >{Math.round(weather?.main?.temp - 273.15)}°C</Text>
                             
                             <Text style={styles.typeWeather}>{weather?.weather[0]?.main}</Text>
                         </View>
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     dateContainer: {
         alignItems: 'center',
         fontSize: 20,
-        color: '#310303',
+        color: '#fff',
 
     },
     textInput: {
@@ -207,37 +207,45 @@ const styles = StyleSheet.create({
         fontSize: 20,
         flexDirection: 'row',
         justifyContent: 'center',
-        color: '#310303',
+        color: '#fff',
     },
     weatherContainer: {
-        color: '#310303',
+        color: '#fff',
         alignItems: 'center',
     },
     temp: {
         fontSize: 100,
-        color: '#310303',
+        color: '#fff',
         alignItems: 'center',
+        // shadow of text
+        textShadowColor: 'rgba(0, 0, 0, 0.50)',
+        textShadowOffset: { width: -1, height: 2 },
+        textShadowRadius: 5
+
     },
     typeWeather: {
         fontSize: 25,
         marginHorizontal: 5,
         alignItems: 'center',
         flexDirection: 'row',
-        color: '#310303',
+        color: '#fff',
+        textShadowColor: 'rgba(0, 0, 0, 0.50)',
+        textShadowOffset: { width: -1, height: 2 },
+        textShadowRadius: 5
     },
     humidity: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        color: '#310303',
+        color: '#fff',
 
     },
     wind: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        color: '#310303',
+        color: '#fff',
     },
     day: {
         flexDirection: 'row',
