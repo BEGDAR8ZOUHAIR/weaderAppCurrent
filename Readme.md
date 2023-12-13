@@ -1,8 +1,5 @@
 
 ## Weather APP 
-
-https://user-images.githubusercontent.com/93929557/215762140-6249e9c0-c5ab-4c15-bc1f-ed4baa57920a.mp4
-
  
 Create a weather app based on my geolocation:
 Creates the authentication and registration interfaces.

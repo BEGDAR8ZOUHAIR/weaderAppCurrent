@@ -6,7 +6,7 @@ import { EvilIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Location from 'expo-location'
 import axios from 'axios'
 import SunIcon from '../assets/dashboard.png';
-import { API_KEY } from '../utils/weatherApiKey';
+import { API_KEY } from '../../mobile/utils/weatherApiKey';
 
 const hours = ['9:00', '12:00', '15:00', '18:00', '21:00', '00:00', '03:00', '06:00'];
 
@@ -34,7 +34,6 @@ const Home = () =>
             let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${API_KEY}`)
             setWeather(response.data)
-            console.log(response.data)
         } catch (error)
         {
             Alert.alert(
